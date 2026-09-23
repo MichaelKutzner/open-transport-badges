@@ -5,7 +5,7 @@
 #let make-tag((name, organization)) = [
   #set align(center + horizon)
   #set text(14pt, fill: orange)
-  #let badge = grid(
+  #grid(
     rows: (1fr, 1fr),
     [
       #text("Open Transport Community Conference", size: 24pt, weight: "bold")
@@ -39,20 +39,25 @@
       )
     ],
   )
-  #grid(
-    columns: 2,
-    stroke: none,
-    [#badge], [#badge],
-  )
 ]
+
+#let data-to-fold(data, rows, columns) = {
+  let repeat-each(data) = {
+    data.map(e => (e, e)).flatten()
+  }
+  let data-size = data.at(0).len()
+  let items-per-page = int((rows * columns) / 2)
+  data.chunks(items-per-page).map(repeat-each).flatten().chunks(data-size)
+}
 
 #etykett.labels(
   sheet: etykett.sheet(
     paper: "a4",
     margins: .5cm,
     rows: 2,
-    columns: 1,
+    columns: 2,
   ),
   // border: true,  // Enable for debugging
-  ..data.map(make-tag),
+  ..data-to-fold(data, 2, 2).map(make-tag),
 )
+
