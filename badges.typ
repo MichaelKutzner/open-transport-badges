@@ -42,12 +42,29 @@
 ]
 
 #let data-to-fold(data, rows, columns) = {
-  let repeat-each(data) = {
-    data.map(e => (e, e)).flatten()
+  let repeat-each(chunk) = {
+    chunk.map(entry => (entry, entry))
   }
   let data-size = data.at(0).len()
   let items-per-page = int((rows * columns) / 2)
   data.chunks(items-per-page).map(repeat-each).flatten().chunks(data-size)
+}
+
+#let data-to-duplex(data, rows, columns) = {
+  let items-per-page = rows * columns
+  let data-size = data.at(0).len()
+  let align(chunk) = {
+    let entries-missing = items-per-page - chunk.len()
+    if entries-missing == 0 {
+      chunk
+    } else {
+      (chunk + ((entries-missing * data-size) * ("", ))).flatten().chunks(data-size)
+    }
+  }
+  let mirror(chunk) = {
+    chunk.chunks(columns).map(row => row.rev())
+  }
+  data.chunks(items-per-page).map(align).map(chunk => (chunk, mirror(chunk))).flatten().chunks(data-size)
 }
 
 #etykett.labels(
@@ -58,6 +75,6 @@
     columns: 2,
   ),
   // border: true,  // Enable for debugging
-  ..data-to-fold(data, 2, 2).map(make-tag),
+  // ..data-to-fold(data, 2, 2).map(make-tag),
+  ..data-to-duplex(data, 2, 2).map(make-tag),
 )
-
