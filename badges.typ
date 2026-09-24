@@ -1,5 +1,3 @@
-#import "@preview/etykett:0.1.1"
-
 #let data = csv("data.csv").slice(1)
 
 #let make-tag((name, organization)) = [
@@ -67,14 +65,23 @@
   data.chunks(items-per-page).map(align).map(chunk => (chunk, mirror(chunk))).flatten().chunks(data-size)
 }
 
-#etykett.labels(
-  sheet: etykett.sheet(
+#let make-badges(data, rows, columns, formatter: data-to-duplex) = {
+  let items-per-page = rows * columns
+  let make-page(chunk) = {
+    grid(
+      columns: columns * (1fr, ),
+      rows: rows * (1fr, ),
+      // stroke: .5pt + gray,
+      inset: 1mm,
+      ..chunk.map(make-tag)
+    )
+  }
+  set page(
     paper: "a4",
-    margins: .5cm,
-    rows: 2,
-    columns: 2,
-  ),
-  // border: true,  // Enable for debugging
-  // ..data-to-fold(data, 2, 2).map(make-tag),
-  ..data-to-duplex(data, 2, 2).map(make-tag),
-)
+    margin: .5cm,
+  )
+  formatter(data, rows, columns).chunks(items-per-page).map(make-page).join()
+}
+
+#make-badges(data, 2, 2)
+// #make-badges(data, 2, 2, formatter: data-to-fold)
