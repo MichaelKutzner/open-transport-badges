@@ -64,15 +64,16 @@
         table.cell(colspan: 3, ""),
         [],
         [
-          #let first-name = name.split(" ").at(0)
-          #let last-name = if first-name.len() < name.len() { name.slice(first-name.len() + 1, none) } else { "" }
+          #let first-name = name.split(" ").at(0).trim()
+          #let last-name = if first-name.len() < name.len() { name.slice(first-name.len() + 1, none).trim() } else { "" }
           #let fields = (
             (
               huge(first-name),
               last-name,
-              organization.split("/").map(org => text(fill: blue, org)),
+              organization.split("/").map(org => text(fill: blue, org.trim())),
               5 * ("",),
             )
+              .filter(row => row != "")  // Remove empty rows
               .flatten()
               .slice(0, 5)
           )
