@@ -1,5 +1,3 @@
-#let data = csv("data.csv").slice(1)
-
 #let make-tag((name, organization)) = [
   #set align(center + horizon)
   #set text(14pt, fill: orange)
@@ -141,6 +139,19 @@
   )
   formatter(data, rows, columns).chunks(items-per-page).map(make-page).join()
 }
+
+// Setup fake data for development
+#let data = (
+  ("Max Mustermann", "Muster AG"),
+  ("Maxi", ""),
+  ("Someperson Withalongname", "Wholesome Community"),
+  ("John Doe", ""),
+  ("NameX", "Project A/Project B"),
+)
+// Use real data when printin
+// Notice that 'slice(1)' will remove the first row. Remove if not needed.
+// #let data = csv("data.csv").slice(1)
+
 
 #make-badges(data, 2, 2)
 // #make-badges(data, 2, 2, formatter: data-to-fold)
