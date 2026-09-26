@@ -68,17 +68,22 @@
         [
           #let first-name = name.split(" ").at(0)
           #let last-name = if first-name.len() < name.len() { name.slice(first-name.len() + 1, none) } else { "" }
+          #let fields = (
+            (
+              huge(first-name),
+              last-name,
+              organization.split("/").map(org => text(fill: blue, org)),
+              5 * ("",),
+            )
+              .flatten()
+              .slice(0, 5)
+          )
           #table(
             align: center,
             columns: 1fr,
             rows: 5 * 1fr, // For n rows of equal heigth
             stroke: (x: none, top: none, bottom: (paint: maroon, thickness: 0.5pt, dash: "dotted")),
-            [#huge(first-name)],
-            [#last-name],
-            [#text(fill: blue, organization)],
-            [#str.from-unicode(0x20)], // Add space to ensure correct height
-            [#str.from-unicode(0x20)],
-            [#str.from-unicode(0x20)],
+            ..fields
           )],
         [
         ],
