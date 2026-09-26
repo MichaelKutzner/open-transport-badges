@@ -17,16 +17,6 @@
       image("logos/supporters/sbb-logo.svg"), image("logos/supporters/FOSSGIS.svg"),
     )
   }
-  #let make-communities = {
-    let logos = ("motis-logo.svg", "osm-logo.svg", "otp-logo.svg", "transitous-logo.svg").map(filename => (
-      "logos/communities/" + filename
-    ))
-    grid(
-      columns: logos.len() * (1fr,),
-      inset: insets,
-      ..logos.map(image)
-    )
-  }
   #let make-supporters = {
     let logos = (
       "DB_InfraGo_logo_red_black_100px_rgb.svg",
@@ -49,7 +39,6 @@
       text("Open Transport Community Conference", weight: "bold"),
       make-sponsors,
       image("logos/logo.png"),
-      make-communities,
       text("Bern, October 6th – 9th, 2026", size: 12pt, fill: blue),
       make-supporters,
     )
