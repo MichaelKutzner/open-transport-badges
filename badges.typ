@@ -17,13 +17,8 @@
       image("logos/supporters/sbb-logo.svg"), image("logos/supporters/FOSSGIS.svg"),
     )
   }
-  #let make-supporters = {
-    let logos = (
-      "DB_InfraGo_logo_red_black_100px_rgb.svg",
-      "entur-logo.png",
-      "sbb-logo.svg",
-      "skanetrafiken-logo.png",
-    ).map(filename => (
+  #let make-supporters(logo_filenames) = {
+    let logos = logo_filenames.map(filename => (
       "logos/supporters/" + filename
     ))
     grid(
@@ -32,15 +27,23 @@
       ..logos.map(image)
     )
   }
+  #let supporters = (
+    "DB_InfraGo_logo_red_black_100px_rgb.svg",
+    "entur-logo.png",
+    "opentransportdata-swiss-logo.png",
+    "skanetrafiken-logo.png",
+  )
+  #let supporters-count = int((supporters.len() + 1) / 2)
   #let make-logos = {
     grid(
-      rows: (2fr, 1fr, 6fr, 1fr, 1fr, 1fr),
+      rows: (2fr, 1fr, 6fr, .5fr, 1fr, .5fr),
       columns: (1fr,),
       text("Open Transport Community Conference", weight: "bold"),
       make-sponsors,
       image("logos/logo.png"),
+      make-supporters(supporters.slice(0, supporters-count)),
       text("Bern, October 6th – 9th, 2026", size: 12pt, fill: blue),
-      make-supporters,
+      make-supporters(supporters.slice(supporters-count, none)),
     )
   }
   #let make-name = {
