@@ -5,6 +5,12 @@
   #set text(14pt, fill: orange)
   #let huge(content) = text(size: 24pt, weight: "bold", content)
   #let small(content) = text(fill: black, size: 9pt, content)
+  #let insets = (
+    top: 0pt,
+    right: 2mm,
+    bottom: 0pt,
+    left: 2mm,
+  )
   #let make-sponsors = {
     grid(
       columns: 2 * (1fr,),
@@ -19,7 +25,7 @@
     ))
     grid(
       columns: logos.len() * (1fr,),
-      inset: 1mm,
+      inset: insets,
       ..logos.map(image)
     )
   }
@@ -34,7 +40,7 @@
     ))
     grid(
       columns: logos.len() * (1fr,),
-      inset: 1mm,
+      inset: insets,
       ..logos.map(image)
     )
   }
@@ -55,7 +61,9 @@
       #set text(size: 16pt)
       #table(
         columns: (1fr, 18fr, 1fr),
+        rows: (1fr, 18fr, 1fr),
         stroke: none,
+        table.cell(colspan: 3, ""),
         [],
         [
           #let first-name = name.split(" ").at(0)
@@ -63,7 +71,7 @@
           #table(
             align: center,
             columns: 1fr,
-            // rows: 5 * 1fr,  // For n rows of equal heigth
+            rows: 5 * 1fr, // For n rows of equal heigth
             stroke: (x: none, top: none, bottom: (paint: maroon, thickness: 0.5pt, dash: "dotted")),
             [#huge(first-name)],
             [#last-name],
@@ -74,6 +82,7 @@
           )],
         [
         ],
+        table.cell(colspan: 3, ""),
       )
     ]
   }
