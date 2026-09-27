@@ -115,7 +115,7 @@
   data.chunks(items-per-page).map(align).map(chunk => (chunk, mirror(chunk))).flatten().chunks(data-size)
 }
 
-#let make-badges(data, rows, columns, formatter: data-to-duplex) = {
+#let make-badges(data, rows, columns, papersize: "a4", landscape: false, formatter: data-to-duplex) = {
   let items-per-page = rows * columns
   let make-page(chunk) = {
     grid(
@@ -127,7 +127,8 @@
     )
   }
   set page(
-    paper: "a4",
+    paper: papersize,
+    flipped: landscape,
     margin: .5cm,
   )
   formatter(data, rows, columns).chunks(items-per-page).map(make-page).join()
@@ -146,5 +147,6 @@
 // #let data = csv("data.csv").slice(1)
 
 
-#make-badges(data, 2, 2)
-// #make-badges(data, 2, 2, formatter: data-to-fold)
+#make-badges(data, 2, 2)  // Default layout, A4 paper
+// #make-badges(data, 2, 4, papersize: "a3", landscape: true)  // When using A3 paper
+// #make-badges(data, 2, 2, formatter: data-to-fold)  // No duplex print
