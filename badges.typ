@@ -12,8 +12,7 @@
   #let make-sponsors = {
     grid(
       columns: 2 * (1fr,),
-      rows: 2 * (1fr,),
-      small("Hosted by SBB"), small("Organized by FOSSGIS"),
+      rows: (1fr,),
       image("logos/supporters/sbb-logo.svg"), image("logos/supporters/FOSSGIS.svg"),
     )
   }
@@ -42,7 +41,7 @@
       make-sponsors,
       image("logos/logo.png"),
       make-supporters(supporters.slice(0, supporters-count)),
-      text("Bern, October 6th – 9th, 2026", size: 12pt, fill: blue),
+      text("Bern, 2026", size: 12pt, fill: blue),
       make-supporters(supporters.slice(supporters-count, none)),
     )
   }
@@ -57,7 +56,9 @@
         [],
         [
           #let first-name = name.split(" ").at(0).trim()
-          #let last-name = if first-name.len() < name.len() { name.slice(first-name.len() + 1, none).trim() } else { "" }
+          #let last-name = if first-name.len() < name.len() { name.slice(first-name.len() + 1, none).trim() } else {
+            ""
+          }
           #let fields = (
             (
               huge(first-name),
@@ -65,7 +66,7 @@
               organization.split("/").map(org => text(fill: blue, org.trim())),
               5 * ("",),
             )
-              .filter(row => row != "")  // Remove empty rows
+              .filter(row => row != "") // Remove empty rows
               .flatten()
               .slice(0, 5)
           )
