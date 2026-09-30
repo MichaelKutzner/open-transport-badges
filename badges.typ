@@ -35,7 +35,7 @@
   #let supporters-count = int((supporters.len() + 1) / 2)
   #let make-logos = {
     grid(
-      rows: (2fr, 1fr, 6fr, .5fr, 1fr, .5fr),
+      rows: (2fr, 1fr, 2.5fr, 1fr, 1fr, 1fr),
       columns: (1fr,),
       text("Open Transport Community Conference", weight: "bold"),
       make-sponsors,
