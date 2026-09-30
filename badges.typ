@@ -35,14 +35,15 @@
   #let supporters-count = int((supporters.len() + 1) / 2)
   #let make-logos = {
     grid(
-      rows: (2fr, 1fr, 2.5fr, 1fr, 1fr, 1fr),
+      rows: (2fr, 1fr, 1fr, 1fr, 1fr, 1fr, .5fr),
       columns: (1fr,),
       text("Open Transport Community Conference", weight: "bold"),
       make-sponsors,
-      image("logos/logo.png"),
+      text("2026", size: 12pt, fill: blue),
       make-supporters(supporters.slice(0, supporters-count)),
-      text("Bern, 2026", size: 12pt, fill: blue),
+      text("Bern", size: 12pt, fill: blue),
       make-supporters(supporters.slice(supporters-count, none)),
+      [],
     )
   }
   #let make-name = {
