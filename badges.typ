@@ -116,8 +116,16 @@
   data.chunks(items-per-page).map(align).map(chunk => (chunk, mirror(chunk))).flatten().chunks(data-size)
 }
 
-#let make-badges(data, rows, columns, papersize: "a4", landscape: false, formatter: data-to-duplex) = {
+#let make-badges(data, rows, columns, papersize: "a4", landscape: false, formatter: data-to-duplex, min-blanks: 0) = {
   let items-per-page = rows * columns
+  let add-blanks(data) = {
+    if min-blanks == 0 {
+      data
+    } else {
+      let data-size = data.at(0).len()
+      (..data, ..((min-blanks * data-size) * ("", )).flatten().chunks(data-size))
+    }
+  }
   let make-page(chunk) = {
     grid(
       columns: columns * (1fr,),
@@ -132,7 +140,7 @@
     flipped: landscape,
     margin: .5cm,
   )
-  formatter(data, rows, columns).chunks(items-per-page).map(make-page).join()
+  formatter(add-blanks(data), rows, columns).chunks(items-per-page).map(make-page).join()
 }
 
 // Setup fake data for development
@@ -148,6 +156,6 @@
 // #let data = csv("data.csv").slice(1)
 
 
-#make-badges(data, 2, 2)  // Default layout, A4 paper
-// #make-badges(data, 2, 4, papersize: "a3", landscape: true)  // When using A3 paper
-// #make-badges(data, 2, 2, formatter: data-to-fold)  // No duplex print
+#make-badges(data, 2, 2, min-blanks: 5)  // Default layout, A4 paper
+// #make-badges(data, 2, 4, papersize: "a3", landscape: true, min-blanks: 5)  // When using A3 paper
+// #make-badges(data, 2, 2, formatter: data-to-fold, min-blanks: 5)  // No duplex print
