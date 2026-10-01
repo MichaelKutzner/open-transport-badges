@@ -4,15 +4,16 @@
   #let huge(content) = text(size: 24pt, weight: "bold", content)
   #let small(content) = text(fill: black, size: 9pt, content)
   #let insets = (
-    top: 0pt,
-    right: 2mm,
-    bottom: 0pt,
-    left: 2mm,
+    top: 1mm,
+    right: 4mm,
+    bottom: 1mm,
+    left: 4mm,
   )
   #let make-sponsors = {
     grid(
       columns: 2 * (1fr,),
       rows: (1fr,),
+      inset: insets,
       image("logos/supporters/sbb-logo.svg"), image("logos/supporters/FOSSGIS.svg"),
     )
   }
@@ -40,8 +41,8 @@
       text("Open Transport Community Conference", weight: "bold"),
       make-sponsors,
       image("logos/logo.png"),
-      make-supporters(supporters.slice(0, supporters-count)),
       text("Bern, 2026", size: 12pt, fill: blue),
+      make-supporters(supporters.slice(0, supporters-count)),
       make-supporters(supporters.slice(supporters-count, none)),
     )
   }
