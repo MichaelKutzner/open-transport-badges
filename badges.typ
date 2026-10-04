@@ -124,7 +124,7 @@
       data
     } else {
       let data-size = data.at(0).len()
-      (..data, ..((min-blanks * data-size) * ("", )).flatten().chunks(data-size))
+      (..data, ..((min-blanks * data-size) * ("",)).flatten().chunks(data-size))
     }
   }
   let make-page(chunk) = {
@@ -154,9 +154,9 @@
 )
 // Use real data when printin
 // Notice that 'slice(1)' will remove the first row. Remove if not needed.
-// #let data = csv("data.csv").slice(1)
+#let data = csv("./final_attendees.csv").slice(1)
 
 
-#make-badges(data, 2, 2, min-blanks: 5)  // Default layout, A4 paper
-// #make-badges(data, 2, 4, papersize: "a3", landscape: true, min-blanks: 5)  // When using A3 paper
-// #make-badges(data, 2, 2, formatter: data-to-fold, min-blanks: 5)  // No duplex print
+// #make-badges(data, 2, 2, min-blanks: 4)  // Default layout, A4 paper
+#make-badges(data, 2, 4, papersize: "a3", landscape: true, min-blanks: 8)  // When using A3 paper
+// #make-badges(data, 2, 2, formatter: data-to-fold, min-blanks: 4)  // No duplex print
