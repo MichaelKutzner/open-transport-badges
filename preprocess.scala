@@ -1,4 +1,4 @@
-import scala.io.Source
+import scala.io.{AnsiColor as Color, Source}
 import java.io.{File, PrintWriter}
 
 @main def main =
@@ -31,12 +31,16 @@ import java.io.{File, PrintWriter}
   )
 
   val possibleDuplicates = findPossibleDuplicates(filteredAttendees)
-  println(s"Possible duplicates:\n${possibleDuplicates.mkString("\n")}\n")
+  println(
+    s"${Color.RED}Possible duplicates:\n${possibleDuplicates.mkString("\n")}${Color.RESET}\n"
+  )
 
   val finalAttendees = filteredAttendees
     .filterNot(possibleDuplicates.contains)
     .map(_.splitOrganizations)
-  println(s"Final number of attendees: ${finalAttendees.size}")
+  println(
+    s"${Color.BOLD}${Color.GREEN}Final number of attendees: ${finalAttendees.size}${Color.RESET}"
+  )
 
   // Check for remaining invalid characters
   finalAttendees.forall(_.isCvsExportable)
