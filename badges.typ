@@ -154,7 +154,7 @@
 )
 // Use real data when printin
 // Notice that 'slice(1)' will remove the first row. Remove if not needed.
-#let data = csv("./final_attendees.csv").slice(1)
+// #let data = csv("./final_attendees.csv").slice(1)
 
 
 // #make-badges(data, 2, 2, min-blanks: 4)  // Default layout, A4 paper
