@@ -139,7 +139,7 @@
   set page(
     paper: papersize,
     flipped: landscape,
-    margin: .5cm,
+    margin: 0cm, // No margin at page borders
   )
   formatter(add-blanks(data), rows, columns).chunks(items-per-page).map(make-page).join()
 }
